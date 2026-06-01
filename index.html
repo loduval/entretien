@@ -146,7 +146,7 @@ body{
 .done .actions{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
 .done .actions a,.done .actions button{font-family:var(--font-mono);font-size:.8rem;font-weight:600;
   padding:.65rem 1.2rem;border-radius:6px;cursor:pointer;text-decoration:none;transition:.2s;border:1px solid var(--accent);background:transparent;color:var(--accent)}
-.done .actions a.primary{background:var(--accent);color:#031b12}
+.done .actions .primary{background:var(--accent);color:#031b12}
 .done .actions a:hover,.done .actions button:hover{box-shadow:0 0 18px rgba(0,255,157,.35)}
 .done .small{font-size:.7rem;color:var(--text-muted)}
 
@@ -225,8 +225,7 @@ body{
     <h3>Disponibilités enregistrées</h3>
     <div class="recap" id="recap"></div>
     <div class="actions">
-      <a class="primary" id="mailto" href="#">&gt; Envoyer par email</a>
-      <button id="copy">&gt; Copier le récap</button>
+      <button class="primary" id="copy">&gt; Copier le récap</button>
     </div>
     <p class="small">Connexion sécurisée · transmission au service recrutement</p>
   </div>
@@ -348,8 +347,6 @@ execBtn.addEventListener('click', async ()=>{
     selected.map((ts,i)=>"&nbsp;&nbsp;<b>"+(i+1)+".</b> "+fmt.format(new Date(ts))).join("<br>");
 
   const subject="Entretien technique — disponibilités de "+CANDIDATE_NAME;
-  document.getElementById('mailto').href=
-    "mailto:"+RECRUITER_EMAIL+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(recapTxt);
 
   document.getElementById('copy').onclick=async()=>{
     try{await navigator.clipboard.writeText(recapTxt);
@@ -386,7 +383,7 @@ execBtn.addEventListener('click', async ()=>{
     statusEl.style.color = sent ? "" : "var(--yellow)";
     statusEl.textContent = sent
       ? "Transmission réussie · service recrutement notifié"
-      : "⚠ Envoi automatique indisponible — utilise le bouton « Envoyer par email »";
+      : "⚠ Envoi automatique indisponible — réessaie dans un instant ou utilise « Copier le récap »";
   }
   document.getElementById('done').classList.add('show');
 });
